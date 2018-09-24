@@ -67,14 +67,21 @@ def street_input_analysis(input):
                         element = element.split(",")
                         if len(element) != 2:
                             raise ParseException("Please check the format of street coordinate")
-                        elif element[0][0] != "(" or element[1][-1] != ")":
-                            raise ParseException("Please check the format of street coordinate")
                         else:
-                            number_x = ((element[0][1:]))
-                            number_y = (element[1][:-1])
-                            vertex.append(int(number_x[0]))
-                            vertex.append(int(number_y[0]))
-                            vertices.append(vertex)
+                            if len(element[0]) >= 1 and len(element[1]) >= 1:
+                                if element[0][0] != "(" or element[1][-1] != ")":
+                                    raise ParseException("Please check the format of street coordinate")
+                                else:
+                                    try:
+                                        number_x = int((element[0][1:]))
+                                        number_y = int((element[1][:-1]))
+                                    except ValueError:
+                                        raise ParseException("Please check the input of street coordinate")
+                                    vertex.append(int(number_x))
+                                    vertex.append(int(number_y))
+                                    vertices.append(vertex)
+                            else:
+                                raise ParseException("Please check the input of street coordinate")
         else:
             if len(input) > 1:
                 raise ParseException("You should only enter street name for remove command")
