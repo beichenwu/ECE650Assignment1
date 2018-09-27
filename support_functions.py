@@ -58,14 +58,14 @@ def street_input_analysis(input):
                                 element[1]=element[1].replace(")", "")
                                 try:
                                     #number conversion
-                                    number_x = float((element[0][:]))
-                                    number_y = float((element[1][:]))
+                                    number_x = int((element[0][:]))
+                                    number_y = int((element[1][:]))
                                 except ValueError:
                                     #ensure all input is number
                                     raise ParseException("Please check the input of street coordinate")
                                 #add the result into vertice list
-                                vertex.append(float(number_x))
-                                vertex.append(float(number_y))
+                                vertex.append(int(number_x))
+                                vertex.append(int(number_y))
                                 vertices.append(vertex)
                         else:
                             raise ParseException("Please check the input of street coordinate")
@@ -78,9 +78,9 @@ def street_input_analysis(input):
                 # The r command has to end with '"'
                 raise ParseException("The format of street name is wrong")
             else:
-                #split the input by " "
-                input = input.split(" ")
-                street_name = input[1]
+                input_infor = input[0].split(" ")
+                street_name = input_infor[1]
+                #print(input[0])
     #update the street name
     street_name = str(street_name)
     return street_name, vertices
