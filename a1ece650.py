@@ -9,6 +9,7 @@ def main():
     E = []
     intersection_list ={}
     stree_point_list = {}
+    V_list = []
 
     while True:
         user_input = raw_input()
@@ -22,6 +23,7 @@ def main():
             street_point_list = support_functions.cal_street_point(street_list,intersection_list)
             street_point_list = support_functions.sort_street_point_list(street_point_list)
             V = support_functions.update_vertice_list(street_point_list,V)
+            V = support_functions.int_dic(V)
             E = support_functions.edge_list(street_point_list,V)
             support_functions.print_vertix_list(V)
             support_functions.print_edge_list(E)

@@ -1,96 +1,125 @@
 import intersect
 
 class street(object):
+    #define a street cases
     def __init__ (self, name, vertices):
+        #define the name of a street
         self.name = name
+        #define the vertices of a street
         self.vertices = vertices
 
 class ParseException(Exception):
+    #to raise an exception
     def __init__(self, value):
         self._value = value
-
     def __str__(self):
         return str(self._value)
 
-def read_input(user_input, street_list):
-    streetname = []
-    for key, value in street_list.iteritems():
-        streetname.append(key)
-    if user_input[0] == "a":
-        name, vertices = street_input_analysis(user_input)
-        if index_in_list(streetname, name):
-            raise ParseException("The street already exist, please add a different street")
-        else:
-            street1 = street(name, vertices)
-            street_list[street1.name] = street1.vertices
-            return street_list
-    elif user_input[0] == "c":
-        name, vertices = street_input_analysis(user_input)
-        if not index_in_list(streetname, name):
-            raise ParseException("The street you trying to update is not exist, please type the correct name")
-        else:
-            street1 = street(name, vertices)
-            street_list[street1.name] = street1.vertices
-            return street_list
-    elif user_input[0] == "r":
-        name, vertices = street_input_analysis(user_input)
-        if not index_in_list(streetname, name):
-            raise ParseException("The street you trying to remove is not exist, please type the correct name")
-        else:
-            street1 = street(name, vertices)
-            street_list.pop(street1.name)
-        return street_list
-    else:
-        raise ParseException("The command you typed is not exist, the correct command has to start with a, c, r or g")
-
-
 def street_input_analysis(input):
+    "Check if the command is a, c or r"
     command = input[0]
+    #check if there is space between command and the street name
     if input[1] != " ":
         raise ParseException("There has to be an space between the command letter(a, c, or r) and street name")
     else:
-        input = input.split(" ")
-        del input[0]
+        #split the input by "("
+        input = input.split("(")
+        #define the counter and empty string and list
         street_name = ""
         vertices = []
         c = 0
         if command != "r":
-            if input[0][-1] != '"':
-                raise ParseException("The format of street name is wrong")
-            else:
-                for element in input:
-                    if c == 0:
-                        street_name = street_name + "" + element
-                        c = c + 1
+            # there has to be more than 1 "("
+            if len(input) <= 1:
+                raise ParseException("Please check the format of street coordinate")
+            for element in input:
+                #This is for street name only first iteration
+                if c == 0:
+                    element = element.split(" ")
+                    street_name = element[1]
+                    c = c + 1
+                else:
+                # This is for coordinates following iterations
+                    #build an empty list
+                    vertex = []
+                    #split each element by ,
+                    element = element.split(",")
+                    #The coordinate has to be sepearted by ,
+                    if len(element) != 2:
+                        raise ParseException("Please check the format of street coordinate")
                     else:
-                        vertex = []
-                        element = element.split(",")
-                        if len(element) != 2:
-                            raise ParseException("Please check the format of street coordinate")
-                        else:
-                            if len(element[0]) >= 1 and len(element[1]) >= 1:
-                                if element[0][0] != "(" or element[1][-1] != ")":
-                                    raise ParseException("Please check the format of street coordinate")
-                                else:
-                                    try:
-                                        number_x = int((element[0][1:]))
-                                        number_y = int((element[1][:-1]))
-                                    except ValueError:
-                                        raise ParseException("Please check the input of street coordinate")
-                                    vertex.append(int(number_x))
-                                    vertex.append(int(number_y))
-                                    vertices.append(vertex)
+                        # There has to be something exsits at two sides of the , sign
+                        if len(element[0]) >= 1 and len(element[1]) >= 1:
+                            # Check if there is the ")"
+                            if ")" not in element[1]:
+                                raise ParseException("Please check the format of street coordinate")
                             else:
-                                raise ParseException("Please check the input of street coordinate")
+                                #remove ")" for easy data processing
+                                element[1]=element[1].replace(")", "")
+                                try:
+                                    #number conversion
+                                    number_x = int((element[0][:]))
+                                    number_y = int((element[1][:]))
+                                except ValueError:
+                                    #ensure all input is number
+                                    raise ParseException("Please check the input of street coordinate")
+                                #add the result into vertice list
+                                vertex.append(int(number_x))
+                                vertex.append(int(number_y))
+                                vertices.append(vertex)
+                        else:
+                            raise ParseException("Please check the input of street coordinate")
         else:
+            # This is for case "r"
+            # The r command length has to be 1 if we seperated by "("
             if len(input) > 1:
                 raise ParseException("You should only enter street name for remove command")
             elif input[0][-1] != '"':
+                # The r command has to end with '"'
                 raise ParseException("The format of street name is wrong")
             else:
-                street_name = street_name + "" + input[0]
-
+                #split the input by " "
+                input = input.split(" ")
+                street_name = input[1]
+    #update the street name
+    street_name = str(street_name)
     return street_name, vertices
+
+def read_input(user_input, street_list):
+    #Create an new input from user
+    streetname = []
+    for key, value in street_list.iteritems():
+        #store the information into the empty street
+        streetname.append(key)
+    if len(user_input) < 1:
+        raise ParseException("Ensure something is typed before click the enter button")
+    else:
+        if user_input[0] == "a":
+            name, vertices = street_input_analysis(user_input)
+            if index_in_list(streetname, name):
+                raise ParseException("The street already exist, please add a different street")
+            else:
+                street1 = street(name, vertices)
+                street_list[street1.name] = street1.vertices
+                return street_list
+        elif user_input[0] == "c":
+            name, vertices = street_input_analysis(user_input)
+            if not index_in_list(streetname, name):
+                raise ParseException("The street you trying to update is not exist, please type the correct name")
+            else:
+                street1 = street(name, vertices)
+                street_list[street1.name] = street1.vertices
+                return street_list
+        elif user_input[0] == "r":
+            name, vertices = street_input_analysis(user_input)
+            if not index_in_list(streetname, name):
+                raise ParseException("The street you trying to remove is not exist, please type the correct name")
+            else:
+                street1 = street(name, vertices)
+                street_list.pop(street1.name)
+            return street_list
+        else:
+            raise ParseException("The command you typed is not exist, the correct command has to start with a, c, r or g")
 
 def find_all_intersection(street_list):
     intersection_list = []
@@ -113,8 +142,13 @@ def find_all_intersection(street_list):
                             l2 = intersect.Line(src, dst)
                             intersect_point = intersect.intersect(l1,l2)
                             index_sub = index_sub + 1
-                            if intersect_point != None and (not check_exist_point(intersection_list,intersect_point)):
-                                intersection_list.append((intersect_point.x, intersect_point.y))
+                            if intersect_point != None and type(intersect_point) != list and (not check_exist_point(intersection_list,intersect_point)):
+                                intersection_list.append((intersect_point.x,intersect_point.y))
+                            elif intersect_point != None and type(intersect_point) == list:
+                                for i in range(0, len(intersect_point)):
+                                    tmp_point = intersect.Point(intersect_point[i][0],intersect_point[i][1])
+                                    if not check_exist_point(intersection_list,tmp_point):
+                                        intersection_list.append((tmp_point.x,tmp_point.y))
     return intersection_list
 
 def remove_duplicate_elements(list_input):
@@ -161,7 +195,6 @@ def index_in_dic(dic, element):
             return index
     return None
 
-
 def cal_street_point(street_list,intersection_list):
     tmp_street_list = street_list.copy()
     street_point_list= {}
@@ -193,7 +226,6 @@ def sort_street_point_list(street_point_list):
         new_lines = sort_point_list(lines)
         street_point_list[name]=new_lines
     return street_point_list
-
 
 def sort_point_list(list):
     tmp_list_x = []
@@ -244,7 +276,6 @@ def update_vertice_list(street_point_list, vertice_list):
                     tmp_vertice_list[tmp_index] = point1
                     tmp_point_list.append(point1)
                     index_list.append(tmp_index)
-
     return tmp_vertice_list
 
 def edge_list(street_point_list, vertice_list):
@@ -253,7 +284,9 @@ def edge_list(street_point_list, vertice_list):
         for i in range(0, len(lines)-1):
             index_1 = index_in_dic(vertice_list, lines[i])
             index_2 = index_in_dic(vertice_list, lines[i+1])
-            edge_list.append((index_1, index_2))
+            edge = (index_1, index_2)
+            if not check_exist_edge(edge_list, edge):
+                edge_list.append(edge)
     return edge_list
 
 def print_vertix_list(vertice_list):
@@ -267,6 +300,29 @@ def print_edge_list(edge_list):
     for value in edge_list:
         print("<{}, {}>,".format(value[0], value[1]))
     print "}"
+
+def dic_to_list(dic):
+    list = []
+    for key, value in dic.iteritems():
+            list.append(value)
+    return list
+
+def check_exist_edge(list, edge):
+    for element in list:
+        if (element[0] == edge[0] and element[1] == edge[1]) or (element[1] == edge[0] and element[0] == edge[1]):
+            return True
+    return  False
+
+def check_int(number):
+    if float(int(number)) == number:
+        return int(number)
+    return number
+
+def int_dic(dic):
+    new_dic = {}
+    for key, value in dic.iteritems():
+        new_dic[key] = (check_int(value[0]),check_int(value[1]))
+    return new_dic
 
 
 
