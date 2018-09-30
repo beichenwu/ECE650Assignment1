@@ -40,16 +40,16 @@ def intersect (l1, l2):
             point_list.append((point3.x, point3.y))
         if support_functions.point_check(point4,l1):
             point_list.append((point4.x, point4.y))
-            return point_list
+        return point_list
     else:
         return None
 
 if __name__ == '__main__':
-    p1 = Point (2, -1)
-    p2 = Point (2, 2)
-    p3 = Point (1, 4)
-    p4 = Point (5, 8)
+    p1 = Point (0, 0)
+    p2 = Point (5, 0)
+    p3 = Point (1, 0)
+    p4 = Point (6, 0)
 
     l1 = Line (p1, p2)
     l2 = Line (p3, p4)
-    print 'Intersect of', l1, 'with', l2, 'is', intersect(l1, l2)
+    print('Intersect of', l1, 'with', l2, 'is', intersect(l1, l2))
