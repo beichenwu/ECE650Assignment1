@@ -200,11 +200,11 @@ def cal_street_point(street_list,intersection_list):
                 intersect_point = intersect.Point(point[0],point[1])
                 if point_check(intersect_point, line):
                     if count == 0:
-                        tmp_street_point_list.append((src.x, src.y))
-                        tmp_street_point_list.append((dst.x, dst.y))
+                        tmp_street_point_list.append((src.x,src.y))
+                        tmp_street_point_list.append((dst.x,dst.y))
                         count = count + 1
                     if not check_exist_point(tmp_street_point_list, intersect_point):
-                        tmp_street_point_list.append((intersect_point.x, intersect_point.y))
+                        tmp_street_point_list.append((intersect_point.x,intersect_point.y))
             if len(tmp_street_point_list)> 0:
                 street_point_list[index] = tmp_street_point_list
                 index = index + 1
@@ -288,7 +288,7 @@ def print_vertix_list(vertice_list):
 def print_edge_list(edge_list):
     print( "E = {")
     for value in edge_list:
-        print("<{}, {}>,".format(value[0], value[1]))
+        print("<{},{}>,".format(value[0], value[1]))
     print("}")
 
 def dic_to_list(dic):

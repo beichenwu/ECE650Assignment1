@@ -17,7 +17,7 @@ def main():
             try:
                 street_list = support_functions.read_input(user_input, street_list)
             except support_functions.ParseException as ex:
-                sys.stdout.write("Error: {0}\n".format(ex))
+                sys.stderr.write("Error: {0}\n".format(ex))
         else:
             intersection_list = support_functions.find_all_intersection(street_list)
             street_point_list = support_functions.cal_street_point(street_list,intersection_list)
