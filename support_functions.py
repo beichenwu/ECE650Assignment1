@@ -282,13 +282,19 @@ def edge_list(street_point_list, vertice_list):
 def print_vertix_list(vertice_list):
     print("V = {")
     for index, value in vertice_list.iteritems():
-        print("{}: {}".format(index, value))
+        print("{}: ({},{})".format(index, value[0], value[1]))
     print("}")
 
 def print_edge_list(edge_list):
     print( "E = {")
+    i = 1;
     for value in edge_list:
-        print("<{},{}>,".format(value[0], value[1]))
+        if i < len(edge_list):
+            print("<{},{}>,".format(value[0], value[1]))
+            i = i + 1;
+        else:
+            print("<{},{}>".format(value[0], value[1]))
+            i = i + 1;
     print("}")
 
 def dic_to_list(dic):
