@@ -13,7 +13,10 @@ def main():
 
     while True:
         user_input = raw_input()
-        if user_input != "g":
+        if user_input  == '':
+            break
+            print 'read a line:', line
+        elif user_input != "g":
             try:
                 street_list = support_functions.read_input(user_input, street_list)
             except support_functions.ParseException as ex:
@@ -27,6 +30,8 @@ def main():
             E = support_functions.edge_list(street_point_list,V)
             support_functions.print_vertix_list(V)
             support_functions.print_edge_list(E)
+    print 'Finished reading input'
+    sys.exit(0)
 
 
     ### YOUR MAIN CODE GOES HEREs
@@ -34,15 +39,15 @@ def main():
     ### sample code to read from stdin.
     ### make sure to remove all spurious print statements as required
     ### by the assignment
-    while True:
-        line = sys.stdin.readline()
-        if line == '':
-            break
-        print 'read a line:', line
+    #while True:
+        #line = sys.stdin.readline()
+        #if line == '':
+            #break
+        #print 'read a line:', line
 
-    print 'Finished reading input'
+    #print 'Finished reading input'
     # return exit code 0 on successful termination
-    sys.exit(0)
+    #sys.exit(0)
 
 if __name__ == '__main__':
     main()
