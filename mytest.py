@@ -14,7 +14,7 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(support_functions.read_input('a "A"  (2,3)   (2,   6) (    3,7) (4,3)',{}),{"A": [[2,3],[2,6],[3,7],[4,3]]})
         self.assertEqual(support_functions.read_input('a "B"(2,3)   (2,3) (3,1) (3,3)', {"A": [[2,3], [2,6], [3,7], [4,3]]}),{"A": [[2,3], [2,6], [3,7], [4,3]],"B": [[2,3], [2,3], [3,1], [3,3]]})
         self.assertEqual(support_functions.read_input('c "B" (2,2)   (2,2) (3,5) (7,3)', {"A": [[2,3], [2,6], [3,7], [4,3]],"B": [[2,3], [2,3], [3,1], [3,3]]}),{"A": [[2,3], [2,6], [3,7], [4,3]], "B": [[2,2], [2,2], [3,5], [7,3]]})
-        self.assertEqual(support_functions.read_input('r"B"',{"A": [[2, 3], [2, 6], [3, 7], [4, 3]],"B": [[2, 3], [2, 3], [3, 1], [3, 3]]}),{"A": [[2, 3], [2, 6], [3, 7], [4, 3]]})
+        #self.assertEqual(support_functions.read_input('r "C"',{"A": [[2, 3], [2, 6], [3, 7], [4, 3]],"B": [[2, 3], [2, 3], [3, 1], [3, 3]]}),{"A": [[2, 3], [2, 6], [3, 7], [4, 3]]})
 
     def test_find_all_intersection(self):
         self.assertEqual(support_functions.find_all_intersection({"A": [[2, 1], [2, 2]],"B": [[2, 1], [4, 8]]}),[(2.0,1.0)])
@@ -145,6 +145,8 @@ class TestStringMethods(unittest.TestCase):
         l1 = intersect.Line(intersect.Point(0,0),intersect.Point(5,0))
         l2 = intersect.Line(intersect.Point(1,0), intersect.Point(6,0))
         self.assertEqual((intersect.intersect(l1,l2)),[(1.0,0.0)])
+
+
 
 
 
