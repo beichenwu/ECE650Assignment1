@@ -77,7 +77,7 @@ def street_input_analysis(input):
             street_name = input_infor[1]
             #print(input[0])
     #update the street name
-    street_name = str(street_name).upper()
+    street_name = str(street_name)
     return street_name, vertices
 
 def read_input(user_input, street_list):
@@ -155,7 +155,7 @@ def point_check(point, line):
         delta = a * point.x + b - point.y
     else:
         delta = point.x - x1
-    delta = abs(round(delta,10))
+
     if delta == 0 and (point.x >= min(x1,x2) and point.x <= max(x1,x2)) and (point.y >= min(y1,y2) and point.y <= max(y1,y2)):
         return True
     else:
@@ -198,7 +198,6 @@ def cal_street_point(street_list,intersection_list):
             line = intersect.Line(src, dst)
             for point in intersection_list:
                 intersect_point = intersect.Point(point[0],point[1])
-                #print(intersect_point.x, intersect_point.y)
                 if point_check(intersect_point, line):
                     if count == 0:
                         tmp_street_point_list.append((src.x,src.y))

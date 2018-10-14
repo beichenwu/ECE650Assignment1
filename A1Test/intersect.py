@@ -20,8 +20,6 @@ def intersect (l1, l2):
     x2, y2 = l1.dst.x, l1.dst.y
     x3, y3 = l2.src.x, l2.src.y
     x4, y4 = l2.dst.x, l2.dst.y
-    point1 = Point(x1, y1)
-    point2 = Point(x2, y2)
     point3 = Point(x3, y3)
     point4 = Point(x4, y4)
 
@@ -29,6 +27,7 @@ def intersect (l1, l2):
     yden = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4)
     xnum = ((x1*y2-y1*x2)*(x3-x4) - (x1-x2)*(x3*y4-y3*x4))
     ynum = (x1 * y2 - y1 * x2) * (y3 - y4) - (y1 - y2) * (x3 * y4 - y3 * x4)
+
     if xden != 0 and yden != 0:
         xcoor =  xnum / xden
         ycoor = ynum / yden
@@ -41,12 +40,6 @@ def intersect (l1, l2):
             point_list.append((point3.x, point3.y))
         if support_functions.point_check(point4,l1):
             point_list.append((point4.x, point4.y))
-    elif (xden == 0 and yden == 0) and (support_functions.point_check(point1,l2) or support_functions.point_check(point2,l2)):
-        point_list= []
-        if support_functions.point_check(point1,l2):
-            point_list.append((point1.x, point1.y))
-        if support_functions.point_check(point2,l2):
-            point_list.append((point2.x, point2.y))
         return point_list
     else:
         return None

@@ -10,9 +10,9 @@ def main():
     intersection_list ={}
     stree_point_list = {}
     V_list = []
+
     while True:
-        #try:
-        user_input = sys.stdin.readline().strip()
+        user_input = raw_input()
         if user_input  == '':
             break
             print 'read a line:', line
@@ -30,8 +30,6 @@ def main():
             E = support_functions.edge_list(street_point_list,V)
             support_functions.print_vertix_list(V)
             support_functions.print_edge_list(E)
-        #except EOFError:
-            #break;
     print 'Finished reading input'
     sys.exit(0)
 
