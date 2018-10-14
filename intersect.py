@@ -41,6 +41,7 @@ def intersect (l1, l2):
             point_list.append((point3.x, point3.y))
         if support_functions.point_check(point4,l1):
             point_list.append((point4.x, point4.y))
+        return point_list
     elif (xden == 0 and yden == 0) and (support_functions.point_check(point1,l2) or support_functions.point_check(point2,l2)):
         point_list= []
         if support_functions.point_check(point1,l2):
